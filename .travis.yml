@@ -1,5 +1,5 @@
-language: 
-  - java
+language:
+  java
 
 jdk:
   - openjdk11
@@ -9,7 +9,14 @@ before_script:
 
 branches:
   only:
-  - deepspace2019
+    - deepspace2019
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+  slack:
+    secure: c0HegOu+i2Op6ArCDH715tZRrMILe9Wqif55yYE0cldxBAKLJTlIhZplYj6vqV0ekXmjKHeAZO7bpWxwcPQ8MHzLpcSmYaitNg0GFKVibawtHZVGuINE+6jBcJFQCaNcU3bNB5ohEAtrPWJ+uAxGsRncUXVAUAKzF/uhAlr8aQLQqG62aLtiSbwVZvI6IIUzgbKLGgvhAuAo5QSUxYxiQTkvJieEryhMOIm5N24ftHHR3CZzkg84J5bscb+OjzcCCTzfYb5NehR3NhOWEVKiGN6eyARX7na5V523vMB9PTilqd6ZrO4LPHYEYXsWEKr7he7sbqfgMmpU6fW5WwPqK7Ab2dkJP6qA/4rO/Y7PNuqOHDYMoe5M60NtuwB0cZl0LaB58mChnkJfovqr+U4oyQAkyrHL2RmBehxrIHOL8RBCK/HeMAXWLEwQZRkaUss2A4/LeZiuSVtmqgvMpR1eoxo8/8wgGZeZuU4Oal0ZKMbCFoIhQgVxMGKnPcHzTjZcSmN4MdrzFYolwDeb9qfzVjtNWC2rXYf4mSa1CjHCLIyUH6f11hbEWyt5W9VNVf75eJCIuaur43S0EkUpoie084TIhZ8J3Vnpjve+U6AJewZdfLw6T2rn+iSUEe0K4O9nICG9AUqoR8TLTKuADmHAKcbWop96pfP64VJE7Ws67YQ=
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
