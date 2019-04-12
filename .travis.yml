@@ -1,29 +1,26 @@
-language:
-  java
+language: java
 
 jdk:
-  - openjdk11
+- openjdk11
 
 before_script:
-  - cd robot
+- cd robot
 
 branches:
   only:
-    - deepspace2019
+  - deepspace2019
 
 notifications:
   email:
     on_success: change
     on_failure: always
   slack:
-    secure: c0HegOu+i2Op6ArCDH715tZRrMILe9Wqif55yYE0cldxBAKLJTlIhZplYj6vqV0ekXmjKHeAZO7bpWxwcPQ8MHzLpcSmYaitNg0GFKVibawtHZVGuINE+6jBcJFQCaNcU3bNB5ohEAtrPWJ+uAxGsRncUXVAUAKzF/uhAlr8aQLQqG62aLtiSbwVZvI6IIUzgbKLGgvhAuAo5QSUxYxiQTkvJieEryhMOIm5N24ftHHR3CZzkg84J5bscb+OjzcCCTzfYb5NehR3NhOWEVKiGN6eyARX7na5V523vMB9PTilqd6ZrO4LPHYEYXsWEKr7he7sbqfgMmpU6fW5WwPqK7Ab2dkJP6qA/4rO/Y7PNuqOHDYMoe5M60NtuwB0cZl0LaB58mChnkJfovqr+U4oyQAkyrHL2RmBehxrIHOL8RBCK/HeMAXWLEwQZRkaUss2A4/LeZiuSVtmqgvMpR1eoxo8/8wgGZeZuU4Oal0ZKMbCFoIhQgVxMGKnPcHzTjZcSmN4MdrzFYolwDeb9qfzVjtNWC2rXYf4mSa1CjHCLIyUH6f11hbEWyt5W9VNVf75eJCIuaur43S0EkUpoie084TIhZ8J3Vnpjve+U6AJewZdfLw6T2rn+iSUEe0K4O9nICG9AUqoR8TLTKuADmHAKcbWop96pfP64VJE7Ws67YQ=
-    on_success: always
-    on_failure: always
+    secure: QTcp3hkATpPL8GTjjSIsJ4emrJdTw+2yGVjzvzsuaAJu9w3xB9T/EdvRgwJ/QiRLLPbrebeZM/6bJgzdEv1HoVD65jEH6aKeoAMTVoREuo2H2inf59BTBy5sUtCObGCxUif8OayXBxyCSoNiMNjjgTyimyDcZR+ThrEzM+PvYZ9EwFnlaBjyVOaedwLeXhGc9peYHdNoVYPwpbgTQT8zTvx8bhTdCZaLFYFwWIP9pd3KyNlF7zg9T/v3OiYa0YtI4rutvaZiKSsMbXCaWxGPKWi3dJkMyAhkY3Oe5qXMwQu9opkQNuLtK1qKij1NNoX842sOjKm8C0zeACPlVVZsoJM0PRbnjulbcMSxHg4iDO+ir3AEG6yvo+woXBIuKSHHihjJVwZLH4hu5sy9zn/POQDm5HbNhbdBW6XwtsJPMcN5Xjh61/u4iDqgOBOoSqYzGUU3zDtEqqA+LvIB1RqZW2NRCs3G6BX2uIXZLls4+0n/9IONpoeFruJxoe8kxxeoZ2qBBYMVZy/tEZvQCFzur2xGS8xFmLyHHUkkHnZOI5iwZZXdY55uDas+gQhS/FDuk8bD7EQByhjjGiS6L52hyB/dVe7zlhudO4Pd8NHff+GT7x5DK2boLwFJ4rGZZh92IFdUUVURTxBuyft3sjAyoBEKHOESJOuYfuWxOsPhNg8=
 
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
