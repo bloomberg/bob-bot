@@ -10,19 +10,23 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 import frc.robot.commands.DrivetrainTeleop;
 
 /**
- * Add your docs here.
+ * The drivetrain is compromised of the chassis, including the
+ * different wheels and motors that actually allow the robot 
+ * to drive, including any Encoders that let it track its position.
  */
 public class Drivetrain extends Subsystem {
 
     // Generally, return a singleton instance of the subsystem
     private static Drivetrain sInstance;
 
+    // Always return the same instance
     public static Drivetrain getInstance() {
         if (sInstance == null) {
             sInstance = new Drivetrain();
@@ -37,6 +41,9 @@ public class Drivetrain extends Subsystem {
     // Helper class for drivetrain control
     private DifferentialDrive mDiffDrive;
 
+    /**
+     * Constructor to instantiate all of our hardware-wrapping APIs
+     */
     private Drivetrain() {
         // Instantiate the motor controllers using the defined CAN IDs
         mLeftLeader = new CANSparkMax(Constants.Drivetrain.kLeftLeaderId, MotorType.kBrushless);

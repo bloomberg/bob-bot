@@ -21,11 +21,13 @@ public class OI {
 
     /**
      * Get requested X-axis movement speed from the controller
+     * Based on a Constants value, we may negate this to ensure
+     * it gives a positive value when we want to go forward
      * @return requested speed
      */
     public double getDriveSpeed() {
         // left stick, Y axis
-        return mDriveController.getRawAxis(Constants.LogitechController.kLeftStickY); 
+        return (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getRawAxis(Constants.LogitechController.kLeftStickY); 
     }
 
     /**
@@ -43,7 +45,7 @@ public class OI {
      */
     public boolean getQuickTurn() {
         // Left Shoulder button
-        return mDriveController.getBumperPressed(Hand.kLeft);
+        return mDriveController.getBumper(Hand.kLeft);
     }
 
     //// CREATING BUTTONS
