@@ -7,8 +7,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.controllers.XboxController;
+import frc.robot.subsystems.Claw;
+import frc.robot.commands.SetClawTargetMode;
+import frc.robot.commands.SetClawSpinMode;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -27,7 +31,7 @@ public class OI {
      */
     public double getDriveSpeed() {
         // left stick, Y axis
-        return (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getRawAxis(Constants.LogitechController.kLeftStickY); 
+        return (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY(); 
     }
 
     /**
@@ -36,7 +40,7 @@ public class OI {
      */ 
     public double getTurnSpeed() {
         // right stick, x axis
-        return mDriveController.getRawAxis(Constants.LogitechController.kRightStickX);
+        return mDriveController.getRightStickX();
     }
 
     /**
@@ -45,9 +49,15 @@ public class OI {
      */
     public boolean getQuickTurn() {
         // Left Shoulder button
-        return mDriveController.getBumper(Hand.kLeft);
+        return mDriveController.leftBumper.get();
     }
 
+    public OI() {
+        this.mDriveController.buttonX.whenPressed(new SetClawTargetMode(Claw.TargetMode.CARGO));
+        this.mDriveController.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
+        this.mDriveController.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
+        this.mDriveController.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
+    }
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a
     //// joystick.
