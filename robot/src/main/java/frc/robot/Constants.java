@@ -76,6 +76,13 @@ public class Constants {
         }
     }
 
+    public static class Climber {
+        public static final int kLegMuscleId = -1;
+        public static final int kArmWheelId = -1;
+        public static final int kArmMuscleId = -1;
+            // TODO: use real IDs
+    }
+
     // --- Gamepad Constants ---
     public static class LogitechController {
         public static final boolean kInvertMoveSpeed = true;
