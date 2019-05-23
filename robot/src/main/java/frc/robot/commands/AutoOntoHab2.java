@@ -9,6 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/* 
+ * Command to get us onto Hab level 2. It executes ClimbToHab2 followed by
+ * DriveOntoHab.
+ * 
+ * When Complete:
+ *  Both ClimbToHab2 and DriveOntoHab have completed
+ * 
+ */
 public class AutoOntoHab2 extends CommandGroup {
 
   public AutoOntoHab2() {

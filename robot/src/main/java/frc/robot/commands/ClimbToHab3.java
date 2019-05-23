@@ -7,6 +7,13 @@
 
 package frc.robot.commands;
 
+/* 
+ * Command to climb to hab level 3. Makes use of ClimbToHab for implementation
+ * 
+ * When Complete:
+ *  The base of the robot wheels will be even with the floor of hab level 3
+ * 
+ */
 public class ClimbToHab3 extends ClimbToHab {
 
   private static final double HAB_LEG_HEIGHT = 20.0f;

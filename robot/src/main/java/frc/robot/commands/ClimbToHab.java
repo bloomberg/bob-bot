@@ -10,6 +10,23 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Climber;
 
+/* 
+ * Command to climb to the provided leg height.
+ * 
+ * Start: Expected to be run when the robot is on Hab level 1 (bottom
+ * level) and wants to climb to either Hab level 2 or 3. The robot 
+ * should be flush against the hab wall.
+ * 
+ * When Run: 
+ *  The two arms will be extended
+ *  The legs will be extended
+ *  The arm wheels will spin
+ * 
+ * When Complete:
+ *  The base of the robot wheels will be even with the floor of the 
+ *  hab level we are climbing to.
+ * 
+ */
 public class ClimbToHab extends Command {
   // Keep an instance of the drivetrain around
   private Climber climber = Climber.getInstance();

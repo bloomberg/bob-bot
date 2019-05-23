@@ -11,6 +11,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 
+/* 
+ * Command to drive onto either hab levels 2 or 3
+ * 
+ * Start: Expected to be run when the robot even with hab levels
+ * 2 or 3. That is, ClimbToHab{2,3} have completed execution.
+ * 
+ * When Run: 
+ *  The arm wheels will spin
+ *  The drivetrain wheels will move forward
+ * 
+ * When Complete:
+ *  The robot drive wheels will be as far forward as the extended arm
+ *  and extended legs will allow it to be
+ * 
+ */
 public class DriveOntoHab extends Command {
   // Keep an instance of the drivetrain around
   private Drivetrain driveTrain = Drivetrain.getInstance();
