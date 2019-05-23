@@ -11,6 +11,26 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 
+/* 
+ * Command to retract arms and legs and ensure the robot drives all
+ * the way onto the hab.
+ * 
+ * Start: Expected to be run when the robot is on hab levels 2 or 3
+ * and is as far forward as it can be while the arms and legs are 
+ * extended. The weight of the robot should be on the drivetrain
+ * wheels (or should be transferrable to the drivetrain wheels).
+ * 
+ * When Run: 
+ *  The two arms will be retracted
+ *  The legs will be retracted
+ *  The drivetrain wheels will move the robot forward
+ * 
+ * When Complete:
+ *  The robot will be as far forward as is allowable on either 
+ *  hab levels 2 or 3. The legs and arms will be in their 
+ *  full retracted position.
+ * 
+ */
 public class MakeHabOurHome extends Command {
   // Keep an instance of the drivetrain around
   private Climber climber = Climber.getInstance();

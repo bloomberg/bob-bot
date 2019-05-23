@@ -58,36 +58,45 @@ public class Climber extends Subsystem {
     armWheels.set(ControlMode.PercentOutput, onOff ? WHEEL_SPEED : .0f);
   }
 
+  /* Return true if the arm wheels are spinning, false otherwise */
   public boolean areWheelsSpinning(){
     return armWheels.getMotorOutputPercent() >= .0f;
   }
 
+  /* Begin extending legs */
   public void extendLegs(){
     System.out.println("Climber Legs Extending");
     legMuscles.set(ControlMode.PercentOutput, LEG_SPEED);
   }
 
+  /* Stop extending legs. Because of the spring attached to the legs this will
+   * cause the legs to begin being retracted */
   public void retractLegs(){
     System.out.println("Climber Legs Retracting");
     // TODO: this may be wrong
     legMuscles.set(ControlMode.PercentOutput, 0f);
   }
 
+  /* Return the current height of the legs. This value should be the total # of 
+   * inches the robot has been lifted off the ground */
   public double legHeight(){
     //TODO: read motor control or encoder to get leg height
     return 0f;
   }
 
+  /* Begin and keep the arms extended. */
   public void extendArms(){
     System.out.println("Climber Arms Extending");
     armMuscles.set(ARM_EXTENDED);
   }
 
+  /* Retract and keep the arms retracted */
   public void retractArms(){
     System.out.println("Climber Arms Retracting");
     armMuscles.set(ARM_RETRACTED);
   }
 
+  /* Return true if the arms are currently extended, false otherwise */
   public boolean areArmsExtended(){
     return ARM_EXTENDED == armMuscles.get();
   }
