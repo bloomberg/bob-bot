@@ -40,13 +40,21 @@ public class Climber extends Subsystem {
 
   private Climber() {
     legMuscles = new VictorSPX(Constants.Climber.kLegMuscleId);
-    armMuscles = new Solenoid(Constants.Climber.kArmMuscleId);
     armWheels = new VictorSPX(Constants.Climber.kArmWheelId);
+    armMuscles = new Solenoid(Constants.Climber.kArmMuscleId);
 
     // TODO: various init things
   }
 
+  public void resetToDefault(){
+    spinWheels(false);
+    retractArms();
+    retractLegs();
+  }
+
+  /* Turn on or off the spinning of the arm wheels */
   public void spinWheels(boolean onOff){
+    System.out.println("Climber Wheels " + (onOff ? "Spinning" : "Not Spinning"));
     armWheels.set(ControlMode.PercentOutput, onOff ? WHEEL_SPEED : .0f);
   }
 
@@ -55,10 +63,12 @@ public class Climber extends Subsystem {
   }
 
   public void extendLegs(){
+    System.out.println("Climber Legs Extending");
     legMuscles.set(ControlMode.PercentOutput, LEG_SPEED);
   }
 
   public void retractLegs(){
+    System.out.println("Climber Legs Retracting");
     // TODO: this may be wrong
     legMuscles.set(ControlMode.PercentOutput, 0f);
   }
@@ -69,10 +79,12 @@ public class Climber extends Subsystem {
   }
 
   public void extendArms(){
+    System.out.println("Climber Arms Extending");
     armMuscles.set(ARM_EXTENDED);
   }
 
   public void retractArms(){
+    System.out.println("Climber Arms Retracting");
     armMuscles.set(ARM_RETRACTED);
   }
 
