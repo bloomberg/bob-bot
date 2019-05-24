@@ -10,6 +10,9 @@ package frc.robot;
 import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.commands.SetClawTargetMode;
+import frc.robot.commands.AutoOntoHab2;
+import frc.robot.commands.AutoOntoHab3;
+import frc.robot.commands.MakeHabOurHome;
 import frc.robot.commands.SetClawSpinMode;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -22,6 +25,10 @@ public class OI {
     // Assuming we use an XBOX controller (the logitechs should map similarly)
     // The drive controller should be the very first one listed in the DriverStation
     private XboxController mDriveController = new XboxController(0);
+
+    // The auxilery controller is used for non driving / controlling functions.
+    // Things like climing would be handled with the aux controller.
+    private XboxController mAuxController = new XboxController(1);
 
     /**
      * Get requested X-axis movement speed from the controller
@@ -57,6 +64,12 @@ public class OI {
         this.mDriveController.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
         this.mDriveController.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
         this.mDriveController.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
+
+        // Actual buttons should be changed to whatever makes sense
+        this.mAuxController.buttonA.whenPressed(new AutoOntoHab2());
+        this.mAuxController.buttonB.whenPressed(new AutoOntoHab3());
+        this.mAuxController.buttonX.whenPressed(new MakeHabOurHome());
+        
     }
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a
