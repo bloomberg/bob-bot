@@ -19,10 +19,10 @@ public class Constants {
         // We are using CAN based controllers. Each controller has an ID associated with it
         // We use these IDs to directly communicate with a selected device over CAN bus
         // The ids for these CAN devices were assigned via the SparkMax Utility application
-        public static final int kLeftLeaderId = 4;
+        public static final int kLeftLeaderId = 1;
         public static final int kLeftFollowerId = 2;
-        public static final int kRightLeaderId = 1;
-        public static final int kRightFollowerId = 3;
+        public static final int kRightLeaderId = 3;
+        public static final int kRightFollowerId = 4;
     }
 
     public static class Claw {
