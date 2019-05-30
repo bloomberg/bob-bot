@@ -11,7 +11,6 @@ import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.commands.SetClawTargetMode;
 import frc.robot.commands.SetClawSpinMode;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 
 /**

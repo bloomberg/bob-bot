@@ -27,11 +27,16 @@ public class Constants {
 
     public static class Claw {
         public static final int kIntakeId = 5;
+        public static final int kClawSolenoidId = 0;
+
         public static final double kCargoIntakeSpeed = -.4;
         public static final double kCargoExhaustSpeed = .4;
 
         public static final double kHatchIntakeSpeed = .3;
         public static final double kHatchExhaustSpeed = -.3;
+
+        public static final double kCargoHoldSpeed = -.1;
+        public static final double kHatchHoldSpeed = .1;
     }
 
     // --- Gamepad Constants ---
