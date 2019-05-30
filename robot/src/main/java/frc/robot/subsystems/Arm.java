@@ -43,7 +43,6 @@ public class Arm extends Subsystem {
   // Logical values
   private double goalPosition = 0;
 
-
   public Arm() {
     mElevatorMaster = TalonSRXFactory.createDefaultTalonSRX(Constants.Arm.kMasterId);
     mElevatorMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.Arm.kPIDLoopIdx,
@@ -106,14 +105,31 @@ public class Arm extends Subsystem {
     mElevatorMaster.set(ControlMode.PercentOutput, (up ? 1 : -1) * speed);
   }
 
+  public void setMotionMagicPosition(double position) {
+    this.goalPosition = ensurePositionInRange(position);
+  }
+
+  public void setMotorsToCurrentPosition() {
+    this.goalPosition = ensurePositionInRange(this.goalPosition);
+    this.mElevatorMaster.set(ControlMode.MotionMagic, this.goalPosition);
+  }
+
+  public double getGoalPosition() {
+    return this.goalPosition;
+  }
+
   public void updateDashboard() {
     double position = mElevatorMaster.getSelectedSensorPosition();
     SmartDashboard.putNumber("Arm Encoder", position);
     SmartDashboard.putNumber("Arm Goal Position", goalPosition);
-    // SmartDashboard.putNumber("Arm Goal Degrees", convertToDegrees(mGoalPosition));
+    // SmartDashboard.putNumber("Arm Goal Degrees",
+    // convertToDegrees(mGoalPosition));
     // SmartDashboard.putNumber("Arm Degrees", convertToDegrees(position));
     SmartDashboard.putNumber("Arm Voltage", mElevatorMaster.getMotorOutputVoltage());
     SmartDashboard.putNumber("Arm Percent", mElevatorMaster.getMotorOutputPercent());
   }
 
+  public double ensurePositionInRange(double desiredPosition) {
+    return Math.min(Math.max(Constants.Arm.kMinPosition, desiredPosition), Constants.Arm.kMaxPosition);
+  }
 }
