@@ -24,21 +24,20 @@ public class ArmDefaultCommand extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        SmartDashboard.putBoolean("Set Raw Motion", false);
-        SmartDashboard.putNumber("Set Raw Motion", arm.getGoalPosition());
-        System.out.println("initializing claw state machine");
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (Constants.Arm.kOpenLoopOnly) {
+        if (Robot.m_oi.isOpenLoopArm()) {
             double speed = Robot.m_oi.getManualArmSpeed();
             arm.setOpenLoop(speed, speed > 0);
         } else {
+            double current = arm.getGoalPosition();
+            double rawValue = Robot.m_oi.getManualArmSpeed();
             // Check if they want to set from SmartDashboard
-            if (Robot.m_oi.useSmartDashboardMM()) {
-                double position = Robot.m_oi.getSDDesiredMotionMagicPosition(arm.getGoalPosition());
+            if (Robot.m_oi.useControllerMM()) {
+                double position = current + (3 * rawValue);
                 arm.setMotionMagicPosition(position);
             }
 

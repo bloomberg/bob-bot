@@ -64,12 +64,16 @@ public class OI {
         return raw;
     }
 
-    public boolean useSmartDashboardMM() {
-        return SmartDashboard.getBoolean("Use SD Motion Magic", false);
+    public boolean useControllerMM() {
+        return SmartDashboard.getBoolean("Use Stick Motion Magic", false);
     }
 
     public double getSDDesiredMotionMagicPosition(double defaultValue) {
         return SmartDashboard.getNumber("Desired Motion Magic Position", defaultValue);
+    }
+
+    public boolean isOpenLoopArm() {
+        return SmartDashboard.getBoolean("Open Loop Arm", true);
     }
 
     public OI() {
@@ -78,7 +82,8 @@ public class OI {
         this.mOperatorControoler.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
         this.mOperatorControoler.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
 
-        createSmartDashboardBoolean("Use SD Motion Magic", false);
+        createSmartDashboardBoolean("Use Stick Motion Magic", false);
+        createSmartDashboardBoolean("Open Loop Arm", true);
         createSmartDashboardNumber("Desired Motion Magic Position", 0);
     }
 

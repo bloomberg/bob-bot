@@ -40,8 +40,6 @@ public class Constants {
     }
 
     public static class Arm {
-        public static final boolean kOpenLoopOnly = true;
-
         public static final int kMasterId = 0;
         public static final int kSlaveId = 1;
 
@@ -57,26 +55,19 @@ public class Constants {
         public static final int kMotionAcceleration = 4630;
 
         public static final int kMinPosition = 0;
-        public static final int kMaxPosition = 1220;
+        public static final int kMaxPosition = 1150;
 
         public static class PID {
             public static final double F = 0;
-            public static final double P = 0;
-            public static final double I = 0;
-            public static final double D = 0;
+            public static final double P = 2;
+            public static final double I = 0.0002;
+            public static final double D = 20;
             public static final int IZ = 0;
         }
     }
 
     // --- Gamepad Constants ---
     public static class LogitechController {
-        public static final int kLeftStickX = 0;
-        public static final int kLeftStickY = 1;
-        public static final int kLeftTrigger = 2;
-        public static final int kRightStickX = 4;
-        public static final int kRightStickY = 5;
-        public static final int kRightTrigger = 3;
-
         public static final boolean kInvertMoveSpeed = true;
     }
 

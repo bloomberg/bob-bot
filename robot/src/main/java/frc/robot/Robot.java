@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,6 +36,8 @@ public class Robot extends TimedRobot {
   // This is code from the auto-generated robot project. It may be removed
   Command m_autonomousCommand;
 
+  private Compressor compressor;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -42,6 +45,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
+    compressor = new Compressor();
+    compressor.start();
   }
 
   /**
