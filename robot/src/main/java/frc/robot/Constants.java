@@ -40,6 +40,8 @@ public class Constants {
     }
 
     public static class Arm {
+        public static final boolean kOpenLoopOnly = true;
+
         public static final int kMasterId = 0;
         public static final int kSlaveId = 1;
 
@@ -50,6 +52,12 @@ public class Constants {
         public static final int kTimeout = 30;
         public static final int kPIDLoopIdx = 0;
         public static final int kRaiseSlotIdx = 0;
+
+        public static final int kMotionVelocity = 4630;
+        public static final int kMotionAcceleration = 4630;
+
+        public static final int kMinPosition = 0;
+        public static final int kMaxPosition = 1220;
 
         public static class PID {
             public static final double F = 0;

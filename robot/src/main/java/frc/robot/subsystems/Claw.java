@@ -90,7 +90,7 @@ public class Claw extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new ClawDefaultCommand());
+        //setDefaultCommand(new ClawDefaultCommand());
     }
 
     /**
@@ -236,10 +236,10 @@ public class Claw extends Subsystem {
         SmartDashboard.putString("Claw Target Mode", getTargetMode().toString());
         SmartDashboard.putString("Claw Spin Mode", getSpinMode().toString());
 
-        SmartDashboard.putBoolean("Claw Left Hatch Sensor", hatchLeftPresent());
-        SmartDashboard.putBoolean("Claw Right Hatch Sensor", hatchRightPresent());
-        SmartDashboard.putBoolean("Claw Left Cargo Sensor", cargoLeftPresent());
-        SmartDashboard.putBoolean("Claw Right Cargo Sensor", cargoRightPresent());
+        // SmartDashboard.putBoolean("Claw Left Hatch Sensor", hatchLeftPresent());
+        // SmartDashboard.putBoolean("Claw Right Hatch Sensor", hatchRightPresent());
+        // SmartDashboard.putBoolean("Claw Left Cargo Sensor", cargoLeftPresent());
+        // SmartDashboard.putBoolean("Claw Right Cargo Sensor", cargoRightPresent());
     }
 }
 

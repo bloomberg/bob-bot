@@ -10,8 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 
@@ -27,6 +26,7 @@ public class Robot extends TimedRobot {
   // The Drivetrain subsystem contains all of the hardware APIs and
   // methods to easily control and manage the robot's chassis motors & wheels
   public static Drivetrain m_drivetrain = Drivetrain.getInstance();
+  public static Arm arm = Arm.getInstance();
 
   // The Operator Interface (OI) is a class where the robot maps
   // controllers, buttons, and joysticks to different methods and events. 
@@ -34,7 +34,6 @@ public class Robot extends TimedRobot {
 
   // This is code from the auto-generated robot project. It may be removed
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -43,9 +42,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -59,6 +55,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Claw.getInstance().updateDashboard();
+    Arm.getInstance().updateDashboard();
   }
 
   /**
@@ -88,15 +85,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();

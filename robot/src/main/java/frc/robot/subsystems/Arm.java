@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -14,7 +15,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.util.drivers.SlaveVictor;
 import frc.robot.util.drivers.TalonSRXFactory;
 
@@ -22,8 +25,24 @@ import frc.robot.util.drivers.TalonSRXFactory;
  * Add your docs here.
  */
 public class Arm extends Subsystem {
+
+  private static Arm singleton;
+
+  public static Arm getInstance() {
+    if (singleton != null) {
+      return singleton;
+    }
+    singleton = new Arm();
+    return singleton;
+  }
+
+  // Hardware values
   private TalonSRX mElevatorMaster;
   private SlaveVictor mElevatorSlave;
+
+  // Logical values
+  private double goalPosition = 0;
+
 
   public Arm() {
     mElevatorMaster = TalonSRXFactory.createDefaultTalonSRX(Constants.Arm.kMasterId);
@@ -57,16 +76,44 @@ public class Arm extends Subsystem {
     mElevatorMaster.config_kD(Constants.Arm.kRaiseSlotIdx, Constants.Arm.PID.D, Constants.Arm.kTimeout);
 
     /* Set acceleration and vcruise velocity - see documentation */
-    mElevatorMaster.configMotionCruiseVelocity(mProfile.getElevatorMotionVelocity(), Constants.Arm.kTimeout);
-    mElevatorMaster.configMotionAcceleration(mProfile.getElevatorMotionAcceleration(), Constants.Arm.kTimeout);
+    mElevatorMaster.configMotionCruiseVelocity(Constants.Arm.kMotionVelocity, Constants.Arm.kTimeout);
+    mElevatorMaster.configMotionAcceleration(Constants.Arm.kMotionAcceleration, Constants.Arm.kTimeout);
 
     mElevatorSlave = new SlaveVictor(Constants.Arm.kSlaveId, Constants.Arm.kInvertArmMotor);
     mElevatorSlave.setMaster(mElevatorMaster, Constants.Arm.kMotorBrakeModeOn, null);
+
+    updateDashboard();
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ArmDefaultCommand());
   }
+
+  public void setOpenLoop(double speed, boolean up) {
+    speed = Math.abs(speed);
+    if (mElevatorMaster.getSelectedSensorPosition() > Constants.Arm.kMaxPosition && up) {
+      speed = 0;
+    } else if (mElevatorMaster.getSelectedSensorPosition() < Constants.Arm.kMinPosition && !up) {
+      speed = 0;
+    }
+
+    if (!up) {
+      speed /= 3;
+    }
+
+    mElevatorMaster.set(ControlMode.PercentOutput, (up ? 1 : -1) * speed);
+  }
+
+  public void updateDashboard() {
+    double position = mElevatorMaster.getSelectedSensorPosition();
+    SmartDashboard.putNumber("Arm Encoder", position);
+    SmartDashboard.putNumber("Arm Goal Position", goalPosition);
+    // SmartDashboard.putNumber("Arm Goal Degrees", convertToDegrees(mGoalPosition));
+    // SmartDashboard.putNumber("Arm Degrees", convertToDegrees(position));
+    SmartDashboard.putNumber("Arm Voltage", mElevatorMaster.getMotorOutputVoltage());
+    SmartDashboard.putNumber("Arm Percent", mElevatorMaster.getMotorOutputPercent());
+  }
+
 }
