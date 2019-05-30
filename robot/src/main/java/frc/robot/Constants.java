@@ -39,6 +39,27 @@ public class Constants {
         public static final double kHatchHoldSpeed = .1;
     }
 
+    public static class Arm {
+        public static final int kMasterId = 0;
+        public static final int kSlaveId = 1;
+
+        public static final boolean kInvertArmMotor = false;
+        public static final boolean kInvertSensorPhase = false;
+        public static final boolean kMotorBrakeModeOn = true;
+
+        public static final int kTimeout = 30;
+        public static final int kPIDLoopIdx = 0;
+        public static final int kRaiseSlotIdx = 0;
+
+        public static class PID {
+            public static final double F = 0;
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+            public static final int IZ = 0;
+        }
+    }
+
     // --- Gamepad Constants ---
     public static class LogitechController {
         public static final int kLeftStickX = 0;
