@@ -11,6 +11,7 @@ import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.commands.SetClawTargetMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.SetArmTargetHeight;
 import frc.robot.commands.SetClawSpinMode;
 
 /**
@@ -81,6 +82,10 @@ public class OI {
         this.mOperatorControoler.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
         this.mOperatorControoler.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
         this.mOperatorControoler.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
+
+        this.mOperatorControoler.dpadBottom.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.GROUND));
+        this.mOperatorControoler.dpadLeft.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HALF));
+        this.mOperatorControoler.dpadTop.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.MAX));
 
         createSmartDashboardBoolean("Use Stick Motion Magic", false);
         createSmartDashboardBoolean("Open Loop Arm", true);

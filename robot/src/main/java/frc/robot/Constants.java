@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.EnumMap;
+
 /**
  * Constants for the robot
  * 
@@ -43,6 +45,8 @@ public class Constants {
         public static final int kMasterId = 0;
         public static final int kSlaveId = 1;
 
+        public static final int kBasePulseWidth = 0;
+
         public static final boolean kInvertArmMotor = false;
         public static final boolean kInvertSensorPhase = false;
         public static final boolean kMotorBrakeModeOn = true;
@@ -51,8 +55,10 @@ public class Constants {
         public static final int kPIDLoopIdx = 0;
         public static final int kRaiseSlotIdx = 0;
 
-        public static final int kMotionVelocity = 4630;
-        public static final int kMotionAcceleration = 4630;
+        public static final int kMotionVelocityUp = 400;
+        public static final int kMotionAccelerationUp = 400;
+        public static final int kMotionVelocityDown = 100;
+        public static final int kMotionAccelerationDown = 100;
 
         public static final int kMinPosition = 0;
         public static final int kMaxPosition = 1150;
@@ -61,7 +67,7 @@ public class Constants {
             public static final double F = 0;
             public static final double P = 2;
             public static final double I = 0.0002;
-            public static final double D = 20;
+            public static final double D = 10;
             public static final int IZ = 0;
         }
     }
@@ -69,6 +75,24 @@ public class Constants {
     // --- Gamepad Constants ---
     public static class LogitechController {
         public static final boolean kInvertMoveSpeed = true;
+    }
+
+    public static enum TargetHeight {
+        GROUND,
+        HALF,
+        MAX,
+    }
+
+    private static EnumMap<TargetHeight, Integer> targetHeightMap = new EnumMap<TargetHeight, Integer>(TargetHeight.class);
+
+    public static void initTargetHeights() {
+        targetHeightMap.put(TargetHeight.GROUND, Arm.kMinPosition);
+        targetHeightMap.put(TargetHeight.HALF, 575);
+        targetHeightMap.put(TargetHeight.MAX, Arm.kMaxPosition);
+    }
+
+    public static int getPresetHeight(TargetHeight preset) {
+        return targetHeightMap.get(preset);
     }
 
 }

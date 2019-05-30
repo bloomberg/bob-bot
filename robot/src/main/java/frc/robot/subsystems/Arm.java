@@ -75,12 +75,16 @@ public class Arm extends Subsystem {
     mElevatorMaster.config_kD(Constants.Arm.kRaiseSlotIdx, Constants.Arm.PID.D, Constants.Arm.kTimeout);
 
     /* Set acceleration and vcruise velocity - see documentation */
-    mElevatorMaster.configMotionCruiseVelocity(Constants.Arm.kMotionVelocity, Constants.Arm.kTimeout);
-    mElevatorMaster.configMotionAcceleration(Constants.Arm.kMotionAcceleration, Constants.Arm.kTimeout);
+    mElevatorMaster.configMotionCruiseVelocity(Constants.Arm.kMotionVelocityDown, Constants.Arm.kTimeout);
+    mElevatorMaster.configMotionAcceleration(Constants.Arm.kMotionAccelerationDown, Constants.Arm.kTimeout);
+
+    mElevatorMaster
+        .setSelectedSensorPosition(mElevatorMaster.getSelectedSensorPosition() - Constants.Arm.kBasePulseWidth);
 
     mElevatorSlave = new SlaveVictor(Constants.Arm.kSlaveId, Constants.Arm.kInvertArmMotor);
     mElevatorSlave.setMaster(mElevatorMaster, Constants.Arm.kMotorBrakeModeOn, null);
 
+    Constants.initTargetHeights();
     updateDashboard();
   }
 
@@ -105,12 +109,26 @@ public class Arm extends Subsystem {
     mElevatorMaster.set(ControlMode.PercentOutput, (up ? 1 : -1) * speed);
   }
 
+  public void setPresetHeight(Constants.TargetHeight preset) {
+    setMotionMagicPosition(Constants.getPresetHeight(preset));
+  }
+
   public void setMotionMagicPosition(double position) {
     this.goalPosition = ensurePositionInRange(position);
   }
 
   public void setMotorsToCurrentPosition() {
     this.goalPosition = ensurePositionInRange(this.goalPosition);
+
+    // Slow down the velocities if lower
+    if (mElevatorMaster.getSelectedSensorPosition() < this.goalPosition) {
+      mElevatorMaster.configMotionCruiseVelocity(Constants.Arm.kMotionVelocityUp, Constants.Arm.kTimeout);
+      mElevatorMaster.configMotionAcceleration(Constants.Arm.kMotionAccelerationUp, Constants.Arm.kTimeout);
+    } else {
+      mElevatorMaster.configMotionCruiseVelocity(Constants.Arm.kMotionVelocityDown, Constants.Arm.kTimeout);
+      mElevatorMaster.configMotionAcceleration(Constants.Arm.kMotionAccelerationDown, Constants.Arm.kTimeout);
+    }
+
     this.mElevatorMaster.set(ControlMode.MotionMagic, this.goalPosition);
   }
 
@@ -122,6 +140,7 @@ public class Arm extends Subsystem {
     double position = mElevatorMaster.getSelectedSensorPosition();
     SmartDashboard.putNumber("Arm Encoder", position);
     SmartDashboard.putNumber("Arm Goal Position", goalPosition);
+    SmartDashboard.putNumber("Arm Abs Position", mElevatorMaster.getSensorCollection().getPulseWidthPosition());
     // SmartDashboard.putNumber("Arm Goal Degrees",
     // convertToDegrees(mGoalPosition));
     // SmartDashboard.putNumber("Arm Degrees", convertToDegrees(position));
