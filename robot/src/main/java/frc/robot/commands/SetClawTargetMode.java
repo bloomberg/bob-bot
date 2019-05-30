@@ -12,44 +12,43 @@ import frc.robot.subsystems.Claw;
 
 public class SetClawTargetMode extends Command {
 
-  // Keep an instance of the drivetrain around
-  private Claw mClaw;
-  private Claw.TargetMode mMode;
+    // Keep an instance of the drivetrain around
+    private Claw mClaw;
+    private Claw.TargetMode mMode;
 
-  public SetClawTargetMode(Claw.TargetMode mode) {
-    mClaw = Claw.getInstance();
-    mMode = mode;
-    requires(mClaw);
-  }
+    public SetClawTargetMode(Claw.TargetMode mode) {
+        mClaw = Claw.getInstance();
+        mMode = mode;
+    }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("Starting SetClawTargetMode");
-  }
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        System.out.println("Starting SetClawTargetMode");
+    }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    this.mClaw.setTargetMode(this.mMode);
-  }
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        this.mClaw.setTargetMode(this.mMode);
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return true;
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    System.out.println("Ending SetClawTargetMode");
-  }
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        System.out.println("Ending SetClawTargetMode");
+    }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    System.out.println("IEnding SetClawTargetMode");
-  }
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    @Override
+    protected void interrupted() {
+        System.out.println("IEnding SetClawTargetMode");
+    }
 }
