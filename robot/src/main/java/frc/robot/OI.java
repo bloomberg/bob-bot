@@ -10,8 +10,9 @@ package frc.robot;
 import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.commands.SetClawTargetMode;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.SetArmTargetHeight;
 import frc.robot.commands.SetClawSpinMode;
-
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,22 +22,25 @@ public class OI {
     // Assuming we use an XBOX controller (the logitechs should map similarly)
     // The drive controller should be the very first one listed in the DriverStation
     private XboxController mDriveController = new XboxController(0);
+    private XboxController mOperatorControoler = new XboxController(1);
 
     /**
-     * Get requested X-axis movement speed from the controller
-     * Based on a Constants value, we may negate this to ensure
-     * it gives a positive value when we want to go forward
+     * Get requested X-axis movement speed from the controller Based on a Constants
+     * value, we may negate this to ensure it gives a positive value when we want to
+     * go forward
+     * 
      * @return requested speed
      */
     public double getDriveSpeed() {
         // left stick, Y axis
-        return (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY(); 
+        return (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY();
     }
 
     /**
      * Get requested Z-axis rotation speed from the controller
+     * 
      * @return requested rotation speed
-     */ 
+     */
     public double getTurnSpeed() {
         // right stick, x axis
         return mDriveController.getRightStickX();
@@ -44,6 +48,7 @@ public class OI {
 
     /**
      * Get quick turn state from the controller
+     * 
      * @return true if we are in quick turn more
      */
     public boolean getQuickTurn() {
@@ -51,37 +56,73 @@ public class OI {
         return mDriveController.leftBumper.get();
     }
 
-    public OI() {
-        this.mDriveController.buttonX.whenPressed(new SetClawTargetMode(Claw.TargetMode.CARGO));
-        this.mDriveController.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
-        this.mDriveController.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
-        this.mDriveController.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
+    public double getManualArmSpeed() {
+
+        double raw = (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mOperatorControoler.getLeftStickY();
+        if (Math.abs(raw) < .2) {
+            return 0;
+        }
+        return raw;
     }
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a
-    //// joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
 
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
+    public boolean useControllerMM() {
+        return SmartDashboard.getBoolean("Use Stick Motion Magic", false);
+    }
 
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
+    public double getSDDesiredMotionMagicPosition(double defaultValue) {
+        return SmartDashboard.getNumber("Desired Motion Magic Position", defaultValue);
+    }
 
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
+    public boolean isOpenLoopArm() {
+        return SmartDashboard.getBoolean("Open Loop Arm", true);
+    }
 
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
+    public OI() {
+        this.mOperatorControoler.buttonX.whenPressed(new SetClawTargetMode(Claw.TargetMode.CARGO));
+        this.mOperatorControoler.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
+        this.mOperatorControoler.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
+        this.mOperatorControoler.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
 
-    // Start the command when the button is released and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
+        this.mOperatorControoler.dpadBottom.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.GROUND));
+        this.mOperatorControoler.dpadLeft.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HALF));
+        this.mOperatorControoler.dpadRight.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HOLD));
+        this.mOperatorControoler.dpadTop.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.MAX));
+
+        createSmartDashboardBoolean("Use Stick Motion Magic", false);
+        createSmartDashboardBoolean("Open Loop Arm", true);
+        createSmartDashboardNumber("Desired Motion Magic Position", 0);
+    }
+
+    /**
+     * Initialize value on SmartDashboard for user input, but leave old value if
+     * already present.
+     *
+     * @param key      The SmartDashboard key to associate with the value.
+     * @param defValue The default value to assign if not already on dashboard.
+     *
+     * @return The current value that appears on the dashboard.
+     */
+    public static double createSmartDashboardNumber(String key, double defValue) {
+
+        // See if already on dashboard, and if so, fetch current value
+        double value = SmartDashboard.getNumber(key, defValue);
+
+        // Make sure value is on dashboard, puts back current value if already set
+        // otherwise puts back default value
+        SmartDashboard.putNumber(key, value);
+
+        return value;
+    }
+
+    public static boolean createSmartDashboardBoolean(String key, boolean defValue) {
+
+        // See if already on dashboard, and if so, fetch current value
+        boolean value = SmartDashboard.getBoolean(key, defValue);
+
+        // Make sure value is on dashboard, puts back current value if already set
+        // otherwise puts back default value
+        SmartDashboard.putBoolean(key, value);
+
+        return value;
+    }
 }
