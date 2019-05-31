@@ -85,6 +85,7 @@ public class OI {
 
         this.mOperatorControoler.dpadBottom.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.GROUND));
         this.mOperatorControoler.dpadLeft.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HALF));
+        this.mOperatorControoler.dpadRight.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HOLD));
         this.mOperatorControoler.dpadTop.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.MAX));
 
         createSmartDashboardBoolean("Use Stick Motion Magic", false);

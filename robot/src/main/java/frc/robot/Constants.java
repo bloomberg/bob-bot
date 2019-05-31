@@ -79,6 +79,7 @@ public class Constants {
 
     public static enum TargetHeight {
         GROUND,
+        HOLD,
         HALF,
         MAX,
     }
@@ -87,6 +88,7 @@ public class Constants {
 
     public static void initTargetHeights() {
         targetHeightMap.put(TargetHeight.GROUND, Arm.kMinPosition);
+        targetHeightMap.put(TargetHeight.HOLD, 140);
         targetHeightMap.put(TargetHeight.HALF, 575);
         targetHeightMap.put(TargetHeight.MAX, Arm.kMaxPosition);
     }
