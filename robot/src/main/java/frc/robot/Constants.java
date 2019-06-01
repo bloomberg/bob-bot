@@ -17,7 +17,7 @@ import java.util.EnumMap;
  */
 public class Constants {
 
-    public static final double kDriveControllerDeadband = .2;
+    public static final double kDriveControllerDeadband = .15;
 
     // --- Drivetrain Constants ---
     public static class Drivetrain {

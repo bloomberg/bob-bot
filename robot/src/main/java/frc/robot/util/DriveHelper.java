@@ -45,7 +45,7 @@ public class DriveHelper {
    */
   public SpeedControl arcadeDrive(double throttle, double wheel, boolean isQuickTurn, boolean isHighGear) {
     throttle = Util.limit(throttle, 1.0);
-    throttle = handleDeadband(throttle, mThrottleDeadband);
+    throttle = DriveHelper.handleDeadband(throttle, mThrottleDeadband);
 
     wheel = Util.limit(wheel, 1.0);
     wheel = handleDeadband(wheel, mWheelDeadband);
@@ -103,7 +103,7 @@ public class DriveHelper {
     return new SpeedControl(leftPwm, rightPwm);
   }
 
-  public double handleDeadband(double val, double deadband) {
+  public static double handleDeadband(double val, double deadband) {
     return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
   }
 

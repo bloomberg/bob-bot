@@ -9,6 +9,7 @@ package frc.robot;
 
 import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
+import frc.robot.util.DriveHelper;
 import frc.robot.commands.SetClawTargetMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,7 +40,7 @@ public class OI {
      */
     public double getDriveSpeed() {
         // left stick, Y axis
-        return (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY();
+        return DriveHelper.handleDeadband((Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY(), Constants.kDriveControllerDeadband);
     }
 
     /**
