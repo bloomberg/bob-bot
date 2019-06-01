@@ -10,7 +10,11 @@ package frc.robot;
 import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.commands.SetClawTargetMode;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.TargetHeight;
+import frc.robot.commands.IncrementArmTargetHeight;
+import frc.robot.commands.SetArmFromDashboard;
 import frc.robot.commands.SetArmTargetHeight;
 import frc.robot.commands.SetClawSpinMode;
 
@@ -23,6 +27,8 @@ public class OI {
     // The drive controller should be the very first one listed in the DriverStation
     private XboxController mDriveController = new XboxController(0);
     private XboxController mOperatorControoler = new XboxController(1);
+
+    private SendableChooser<TargetHeight> targetHeightChooser;
 
     /**
      * Get requested X-axis movement speed from the controller Based on a Constants
@@ -77,20 +83,40 @@ public class OI {
         return SmartDashboard.getBoolean("Open Loop Arm", true);
     }
 
+    public TargetHeight getSelectedDashboardHeight() {
+        return targetHeightChooser.getSelected();
+    }
+
+    public void changeSelectedDashboardHeight() {
+        
+    }
+
     public OI() {
         this.mOperatorControoler.buttonX.whenPressed(new SetClawTargetMode(Claw.TargetMode.CARGO));
         this.mOperatorControoler.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
         this.mOperatorControoler.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
         this.mOperatorControoler.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
 
+        this.mOperatorControoler.leftBumper.whenPressed(new SetArmFromDashboard(false));
+        this.mOperatorControoler.rightBumper.whenPressed(new SetArmFromDashboard(false));
+
         this.mOperatorControoler.dpadBottom.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.GROUND));
-        this.mOperatorControoler.dpadLeft.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HALF));
-        this.mOperatorControoler.dpadRight.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.HOLD));
-        this.mOperatorControoler.dpadTop.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.MAX));
+        this.mOperatorControoler.dpadRight.whenPressed(new IncrementArmTargetHeight(true));
+        this.mOperatorControoler.dpadLeft.whenPressed(new IncrementArmTargetHeight(false));
 
         createSmartDashboardBoolean("Use Stick Motion Magic", false);
         createSmartDashboardBoolean("Open Loop Arm", true);
         createSmartDashboardNumber("Desired Motion Magic Position", 0);
+
+        targetHeightChooser = new SendableChooser<TargetHeight>();
+        targetHeightChooser.setDefaultOption("Ground", TargetHeight.GROUND);
+        targetHeightChooser.addOption("Low Hatch", TargetHeight.LOW);
+        targetHeightChooser.addOption("Load Cargo", TargetHeight.CARGO_LOAD);
+        targetHeightChooser.addOption("CS Cargo", TargetHeight.CS_CARGO_SCORE);
+        targetHeightChooser.addOption("R2 Hatch", TargetHeight.R2_HATCH);
+        targetHeightChooser.addOption("R1 Cargo", TargetHeight.R1_CARGO_SCORE);
+        targetHeightChooser.addOption("R2 Cargo", TargetHeight.R2_CARGO_SCORE);
+        SmartDashboard.putData("Arm Height", targetHeightChooser);
     }
 
     /**

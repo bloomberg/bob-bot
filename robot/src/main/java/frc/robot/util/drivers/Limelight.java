@@ -44,14 +44,8 @@ public class Limelight {
     private static Map<String, PipelineType> sPipelineTypes = new HashMap<>();
 
     static {
-        sPipelineTypes.put(Pipeline.CLOSE_UP_HATCH_DETECT.name(), 
-                           new PipelineType(Pipeline.CLOSE_UP_HATCH_DETECT.name(), false));
-        sPipelineTypes.put(Pipeline.BALL_CHASE.name(), 
-                           new PipelineType(Pipeline.BALL_CHASE.name(), false));
-        sPipelineTypes.put(Pipeline.THREE_D_HATCH_DETECT.name(), 
-                           new PipelineType(Pipeline.THREE_D_HATCH_DETECT.name(), true));
-        sPipelineTypes.put(Pipeline.FAR_DETECT.name(), 
-                           new PipelineType(Pipeline.FAR_DETECT.name(), false));
+        sPipelineTypes.put(Pipeline.DRIVE_TO_TARGET.name(), 
+                           new PipelineType(Pipeline.DRIVE_TO_TARGET.name(), false));
     }
 
     public static Limelight getInstance() {
@@ -65,12 +59,7 @@ public class Limelight {
 
     public static enum Pipeline {
         // See pipeline documentation above
-        CLOSE_UP_HATCH_DETECT(0),
-        BALL_CHASE(1),
-        THREE_D_HATCH_DETECT(2),
-        FAR_DETECT(3),
-        NEAR_DETECT(4),
-        DRIVER_VIEW(9);
+        DRIVE_TO_TARGET(0);
 
         private final int value;
 

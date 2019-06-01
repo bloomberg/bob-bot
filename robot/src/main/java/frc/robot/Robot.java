@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.util.drivers.Limelight;
+import frc.robot.util.drivers.Limelight.StreamingMode;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -47,6 +49,8 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     compressor = new Compressor();
     compressor.start();
+  
+    Limelight.getInstance().setStreamingMode(StreamingMode.PIP_SECONDARY);
   }
 
   /**
@@ -110,6 +114,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    Limelight.getInstance().setStreamingMode(StreamingMode.PIP_SECONDARY);
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

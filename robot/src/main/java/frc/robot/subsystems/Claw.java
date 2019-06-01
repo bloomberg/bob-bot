@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.commands.ClawDefaultCommand;
 
 /**
@@ -170,7 +171,7 @@ public class Claw extends Subsystem {
                     speed = Constants.Claw.kHatchExhaustSpeed;
                     break;
                 case HOLD:
-                    speed = Constants.Claw.kHatchHoldSpeed;
+                    speed = Robot.m_oi.getQuickTurn() ? Constants.Claw.kHatchQuickHoldSpeed : Constants.Claw.kHatchHoldSpeed;
                     break;
                 default: 
                     speed = 0;
@@ -220,6 +221,10 @@ public class Claw extends Subsystem {
 
     public boolean hatchRightPresent() {
         return mSensors.getGeneralInput(GeneralPin.LIMR);
+    }
+
+    public boolean isHatch() {
+        return hatchLeftPresent() && hatchRightPresent();
     }
 
     public boolean cargoLeftPresent() {
