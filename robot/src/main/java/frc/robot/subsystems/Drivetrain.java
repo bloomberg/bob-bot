@@ -51,6 +51,9 @@ public class Drivetrain extends Subsystem {
         mRightLeader = new CANSparkMax(Constants.Drivetrain.kRightLeaderId, MotorType.kBrushless);
         mRightFollower = new CANSparkMax(Constants.Drivetrain.kRightFollowerId, MotorType.kBrushless);
 
+        this.mLeftLeader.setClosedLoopRampRate(.5);
+        this.mRightLeader.setClosedLoopRampRate(.5);
+
         // We need one motor controller per motor, and we have two motors powering each side
         // of the drivetrain. We *could* send each speed controller per side the same command,
         // or make use of the CAN network, and slave one controller to another. This allows us

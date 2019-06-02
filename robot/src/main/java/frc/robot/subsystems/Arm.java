@@ -42,6 +42,7 @@ public class Arm extends Subsystem {
 
   // Logical values
   private double goalPosition = 0;
+  private Constants.TargetHeight goalHeight = Constants.TargetHeight.LOW;
 
   public Arm() {
     mElevatorMaster = TalonSRXFactory.createDefaultTalonSRX(Constants.Arm.kMasterId);
@@ -79,7 +80,7 @@ public class Arm extends Subsystem {
     mElevatorMaster.configMotionAcceleration(Constants.Arm.kMotionAccelerationDown, Constants.Arm.kTimeout);
 
     mElevatorMaster
-        .setSelectedSensorPosition(mElevatorMaster.getSelectedSensorPosition() - Constants.Arm.kBasePulseWidth);
+        .setSelectedSensorPosition(mElevatorMaster.getSensorCollection().getPulseWidthPosition() - Constants.Arm.kBasePulseWidth);
 
     mElevatorSlave = new SlaveVictor(Constants.Arm.kSlaveId, Constants.Arm.kInvertArmMotor);
     mElevatorSlave.setMaster(mElevatorMaster, Constants.Arm.kMotorBrakeModeOn, null);
@@ -110,6 +111,10 @@ public class Arm extends Subsystem {
   }
 
   public void setPresetHeight(Constants.TargetHeight preset) {
+    if (preset == Constants.TargetHeight.GROUND && Claw.getInstance().isHatch()) {
+      preset = Constants.TargetHeight.LOW;
+    }
+    goalHeight = preset;
     setMotionMagicPosition(Constants.getPresetHeight(preset));
   }
 
@@ -136,9 +141,26 @@ public class Arm extends Subsystem {
     return this.goalPosition;
   }
 
+  public Constants.TargetHeight getTargetHeight() {
+    return goalHeight;
+  }
+
+  public void incrementTargetHeight(boolean increment) {
+    int size = Constants.TargetHeight.values().length;
+    int nextSize = (increment ? 1 : -1) + goalHeight.ordinal();
+
+    if (nextSize < 0) {
+      nextSize = size - 1;
+    } else if (nextSize >= size) {
+      nextSize = 0;
+    }
+    goalHeight = Constants.TargetHeight.values()[nextSize];
+  }
+
   public void updateDashboard() {
     double position = mElevatorMaster.getSelectedSensorPosition();
     SmartDashboard.putNumber("Arm Encoder", position);
+    SmartDashboard.putString("Arm Goal Name", goalHeight.name());
     SmartDashboard.putNumber("Arm Goal Position", goalPosition);
     SmartDashboard.putNumber("Arm Abs Position", mElevatorMaster.getSensorCollection().getPulseWidthPosition());
     // SmartDashboard.putNumber("Arm Goal Degrees",
