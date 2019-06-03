@@ -35,8 +35,8 @@ public class Climber extends Subsystem {
   private static final boolean ARM_RETRACTED = !ARM_EXTENDED;
 
   private VictorSPX legMuscles;
-  private VictorSPX armWheels;
-  private Solenoid armMuscles;
+  private VictorSPX armWheels; // A Victor on Channel 2
+  private Solenoid armMuscles; // Solenoid (split to go to both arms) #1
 
   private Climber() {
     legMuscles = new VictorSPX(Constants.Climber.kLegMuscleId);
@@ -46,65 +46,68 @@ public class Climber extends Subsystem {
     // TODO: various init things
   }
 
-  public void resetToDefault(){
+  public void resetToDefault() {
     spinWheels(false);
     retractArms();
     retractLegs();
   }
 
   /* Turn on or off the spinning of the arm wheels */
-  public void spinWheels(boolean onOff){
+  public void spinWheels(boolean onOff) {
     System.out.println("Climber Wheels " + (onOff ? "Spinning" : "Not Spinning"));
     armWheels.set(ControlMode.PercentOutput, onOff ? WHEEL_SPEED : .0f);
   }
 
   /* Return true if the arm wheels are spinning, false otherwise */
-  public boolean areWheelsSpinning(){
+  public boolean areWheelsSpinning() {
     return armWheels.getMotorOutputPercent() >= .0f;
   }
 
   /* Begin extending legs */
-  public void extendLegs(){
+  public void extendLegs() {
     System.out.println("Climber Legs Extending");
     legMuscles.set(ControlMode.PercentOutput, LEG_SPEED);
   }
 
-  /* Stop extending legs. Because of the spring attached to the legs this will
-   * cause the legs to begin being retracted */
-  public void retractLegs(){
+  /*
+   * Stop extending legs. Because of the spring attached to the legs this will
+   * cause the legs to begin being retracted
+   */
+  public void retractLegs() {
     System.out.println("Climber Legs Retracting");
     // TODO: this may be wrong
     legMuscles.set(ControlMode.PercentOutput, 0f);
   }
 
-  /* Return the current height of the legs. This value should be the total # of 
-   * inches the robot has been lifted off the ground */
-  public double legHeight(){
-    //TODO: read motor control or encoder to get leg height
+  /*
+   * Return the current height of the legs. This value should be the total # of
+   * inches the robot has been lifted off the ground
+   */
+  public double legHeight() {
+    // TODO: read motor control or encoder to get leg height
     return 0f;
   }
 
   /* Begin and keep the arms extended. */
-  public void extendArms(){
+  public void extendArms() {
     System.out.println("Climber Arms Extending");
     armMuscles.set(ARM_EXTENDED);
   }
 
   /* Retract and keep the arms retracted */
-  public void retractArms(){
+  public void retractArms() {
     System.out.println("Climber Arms Retracting");
     armMuscles.set(ARM_RETRACTED);
   }
 
   /* Return true if the arms are currently extended, false otherwise */
-  public boolean areArmsExtended(){
+  public boolean areArmsExtended() {
     return ARM_EXTENDED == armMuscles.get();
   }
 
-
   /**
-   * This is currently not used as the mode selections are managed
-   * by the default variables and controllers
+   * This is currently not used as the mode selections are managed by the default
+   * variables and controllers
    */
   @Override
   public void initDefaultCommand() {

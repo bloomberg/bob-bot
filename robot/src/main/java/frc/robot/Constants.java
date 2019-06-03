@@ -21,9 +21,11 @@ public class Constants {
 
     // --- Drivetrain Constants ---
     public static class Drivetrain {
-        // We are using CAN based controllers. Each controller has an ID associated with it
+        // We are using CAN based controllers. Each controller has an ID associated with
+        // it
         // We use these IDs to directly communicate with a selected device over CAN bus
-        // The ids for these CAN devices were assigned via the SparkMax Utility application
+        // The ids for these CAN devices were assigned via the SparkMax Utility
+        // application
         public static final int kLeftLeaderId = 1;
         public static final int kLeftFollowerId = 2;
         public static final int kRightLeaderId = 3;
@@ -78,9 +80,8 @@ public class Constants {
 
     public static class Climber {
         public static final int kLegMuscleId = -1;
-        public static final int kArmWheelId = -1;
-        public static final int kArmMuscleId = -1;
-            // TODO: use real IDs
+        public static final int kArmWheelId = 2;
+        public static final int kArmMuscleId = 1;
     }
 
     // --- Gamepad Constants ---
@@ -89,18 +90,13 @@ public class Constants {
     }
 
     public static enum TargetHeight {
-        GROUND,
-        LOW,  // Hatch load, cs hatch, r1 hatch  
-        CARGO_LOAD,
-        CS_CARGO_SCORE,
-        R1_CARGO_SCORE,
-        R2_HATCH,
-        R2_CARGO_SCORE,
+        GROUND, LOW, // Hatch load, cs hatch, r1 hatch
+        CARGO_LOAD, CS_CARGO_SCORE, R1_CARGO_SCORE, R2_HATCH, R2_CARGO_SCORE,
     }
 
-
     private static String[] heightNames;
-    private static EnumMap<TargetHeight, Integer> targetHeightMap = new EnumMap<TargetHeight, Integer>(TargetHeight.class);
+    private static EnumMap<TargetHeight, Integer> targetHeightMap = new EnumMap<TargetHeight, Integer>(
+            TargetHeight.class);
 
     public static void initTargetHeights() {
         targetHeightMap.put(TargetHeight.GROUND, Arm.kMinPosition);
