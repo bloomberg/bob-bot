@@ -75,7 +75,7 @@ public class Intake extends Subsystem {
     }
 
     public void updateDashboard() {
-        SmartDashboard.putBoolean("Intake Spinning", areWheelsSpinning());
+        // SmartDashboard.putBoolean("Intake Spinning", areWheelsSpinning());
     }
 
 }

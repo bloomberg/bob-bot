@@ -229,6 +229,10 @@ public class Claw extends Subsystem {
         return hatchLeftPresent() && hatchRightPresent();
     }
 
+    public boolean isCargo() {
+        return cargoLeftPresent() && cargoRightPresent();
+    }
+
     public boolean cargoLeftPresent() {
         // Flipped because the distance sensor is HIGH normally
         return !mSensors.getGeneralInput(GeneralPin.QUAD_A);

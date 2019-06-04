@@ -8,6 +8,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.subsystems.Intake;
+import frc.robot.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Claw.ControlMode;
 import frc.robot.subsystems.Claw.SpinMode;
@@ -19,11 +22,16 @@ import frc.robot.subsystems.Claw.SpinMode;
 public class SetClawSpinMode extends Command {
     // Keep an instance of the drivetrain around
     private Claw mClaw;
+    private Intake mIntake;
     private Claw.SpinMode mMode;
 
     public SetClawSpinMode(Claw.SpinMode mode) {
         mClaw = Claw.getInstance();
+        mIntake = Intake.getInstance();
         mMode = mode;
+
+        requires(mIntake);
+        requires(mClaw);
     }
 
     // Called just before this Command runs the first time
@@ -32,6 +40,9 @@ public class SetClawSpinMode extends Command {
         System.out.println("Starting SetClawSpinMode");
         this.mClaw.setControlMode(ControlMode.MANUAL);
         this.mClaw.setSpinMode(this.mMode);
+        if (this.mMode == Claw.SpinMode.INTAKE && mClaw.getTargetMode() == Claw.TargetMode.CARGO && Arm.getInstance().getTargetHeight() == Constants.TargetHeight.COLLECT) {
+            this.mIntake.spinWheels(true);
+        }
         this.mClaw.ensureMode();
     }
 
@@ -57,6 +68,7 @@ public class SetClawSpinMode extends Command {
         // when this command ends, the speeds should be automatically set
         this.mClaw.setControlMode(ControlMode.AUTO);
         this.mClaw.ensureMode();
+        this.mIntake.stop();
     }
 
     // Called when another command which requires one or more of the same

@@ -40,7 +40,7 @@ public class Constants {
         public static final double kHatchIntakeSpeed = .4;
         public static final double kHatchExhaustSpeed = -.3;
 
-        public static final double kCargoHoldSpeed = -.15;
+        public static final double kCargoHoldSpeed = -.1;
         public static final double kHatchHoldSpeed = .1;
         public static final double kHatchQuickHoldSpeed = .3;
     }

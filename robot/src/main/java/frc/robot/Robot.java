@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     Claw.getInstance().updateDashboard();
     Arm.getInstance().updateDashboard();
-    Intake.getInstance().updateDashboard();
+    // Intake.getInstance().updateDashboard();
   }
 
   /**
