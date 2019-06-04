@@ -11,6 +11,7 @@ import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.util.DriveHelper;
 import frc.robot.commands.SetClawTargetMode;
+import frc.robot.commands.IntakeSpin;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.TargetHeight;
@@ -31,6 +32,10 @@ public class OI {
 
     private SendableChooser<TargetHeight> targetHeightChooser;
 
+    // The auxilery controller is used for non driving / controlling functions.
+    // Things like climing would be handled with the aux controller.
+    private XboxController mAuxController = new XboxController(1);
+
     /**
      * Get requested X-axis movement speed from the controller Based on a Constants
      * value, we may negate this to ensure it gives a positive value when we want to
@@ -40,7 +45,9 @@ public class OI {
      */
     public double getDriveSpeed() {
         // left stick, Y axis
-        return DriveHelper.handleDeadband((Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY(), Constants.kDriveControllerDeadband);
+        return DriveHelper.handleDeadband(
+                (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY(),
+                Constants.kDriveControllerDeadband);
     }
 
     /**
@@ -89,7 +96,7 @@ public class OI {
     }
 
     public void changeSelectedDashboardHeight() {
-        
+
     }
 
     public OI() {
@@ -97,6 +104,7 @@ public class OI {
         this.mOperatorControoler.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
         this.mOperatorControoler.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
         this.mOperatorControoler.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
+        this.mOperatorControoler.buttonStart.whileHeld(new IntakeSpin(true));
 
         this.mOperatorControoler.leftBumper.whenPressed(new SetArmFromDashboard(false));
         this.mOperatorControoler.rightBumper.whenPressed(new SetArmFromDashboard(false));
