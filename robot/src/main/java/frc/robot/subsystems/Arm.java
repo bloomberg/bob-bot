@@ -42,7 +42,7 @@ public class Arm extends Subsystem {
 
   // Logical values
   private double goalPosition = 0;
-  private Constants.TargetHeight goalHeight = Constants.TargetHeight.LOW;
+  private Constants.TargetHeight goalHeight = Constants.TargetHeight.COLLECT;
 
   public Arm() {
     mElevatorMaster = TalonSRXFactory.createDefaultTalonSRX(Constants.Arm.kMasterId);
