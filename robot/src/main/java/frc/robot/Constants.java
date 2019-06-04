@@ -47,6 +47,10 @@ public class Constants {
         public static final double kHatchQuickHoldSpeed = .4;
     }
 
+    public static class Intake {
+        public static final int kArmWheelId = 2;
+    }
+
     public static class Arm {
         public static final int kMasterId = 0;
         public static final int kSlaveId = 1;
@@ -76,12 +80,6 @@ public class Constants {
             public static final double D = 10;
             public static final int IZ = 0;
         }
-    }
-
-    public static class Climber {
-        public static final int kLegMuscleId = -1;
-        public static final int kArmWheelId = 2;
-        public static final int kArmMuscleId = 1;
     }
 
     // --- Gamepad Constants ---

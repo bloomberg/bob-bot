@@ -43,7 +43,7 @@ public class Intake extends Subsystem {
     private VictorSPX armWheels; // A Victor on Channel 2
 
     private Intake() {
-        armWheels = new VictorSPX(Constants.Climber.kArmWheelId);
+        armWheels = new VictorSPX(Constants.Intake.kArmWheelId);
     }
 
     public void resetToDefault() {
