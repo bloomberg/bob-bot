@@ -11,6 +11,7 @@ import frc.robot.controllers.XboxController;
 import frc.robot.subsystems.Claw;
 import frc.robot.util.DriveHelper;
 import frc.robot.commands.SetClawTargetMode;
+import frc.robot.commands.IntakeSpin;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.TargetHeight;
@@ -103,6 +104,7 @@ public class OI {
         this.mOperatorControoler.buttonB.whenPressed(new SetClawTargetMode(Claw.TargetMode.HATCH));
         this.mOperatorControoler.buttonA.whileHeld(new SetClawSpinMode(Claw.SpinMode.INTAKE));
         this.mOperatorControoler.buttonY.whileHeld(new SetClawSpinMode(Claw.SpinMode.EXHAUST));
+        this.mOperatorControoler.buttonStart.whileHeld(new IntakeSpin(true));
 
         this.mOperatorControoler.leftBumper.whenPressed(new SetArmFromDashboard(false));
         this.mOperatorControoler.rightBumper.whenPressed(new SetArmFromDashboard(false));
