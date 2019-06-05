@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.SetArmTargetHeight;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -36,8 +37,8 @@ public class Robot extends TimedRobot {
   // controllers, buttons, and joysticks to different methods and events. 
   public static OI m_oi;
 
-  // This is code from the auto-generated robot project. It may be removed
-  Command m_autonomousCommand;
+  // Immediately pull up to the collect height
+  SetArmTargetHeight m_autonomousCommand = new SetArmTargetHeight(Constants.TargetHeight.COLLECT);
 
   private Compressor compressor;
 
