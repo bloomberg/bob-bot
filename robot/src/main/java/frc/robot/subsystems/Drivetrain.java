@@ -51,8 +51,7 @@ public class Drivetrain extends Subsystem {
         mRightLeader = new CANSparkMax(Constants.Drivetrain.kRightLeaderId, MotorType.kBrushless);
         mRightFollower = new CANSparkMax(Constants.Drivetrain.kRightFollowerId, MotorType.kBrushless);
 
-        this.mLeftLeader.setClosedLoopRampRate(.5);
-        this.mRightLeader.setClosedLoopRampRate(.5);
+        setRampRate(.3);
 
         // We need one motor controller per motor, and we have two motors powering each side
         // of the drivetrain. We *could* send each speed controller per side the same command,
@@ -75,6 +74,11 @@ public class Drivetrain extends Subsystem {
         // Set the default command for the subsystem. This is the command that will run
         // whenever nothing else using the subsystem is running.
         setDefaultCommand(new DrivetrainTeleop());
+    }
+
+    public void setRampRate(double ramp) {
+        this.mLeftLeader.setClosedLoopRampRate(ramp);
+        this.mRightLeader.setClosedLoopRampRate(ramp);
     }
 
     /**
@@ -172,6 +176,13 @@ public class Drivetrain extends Subsystem {
      * @param isQuickTurn If set, overrides constant curvature turning (turns zRotation into rotation rate instead of curvature radius)
      */
     public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
+
+        if (isQuickTurn) {
+            setRampRate(.1);
+        } else {
+            setRampRate(.3);
+        }
+
         mDiffDrive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
     }
 

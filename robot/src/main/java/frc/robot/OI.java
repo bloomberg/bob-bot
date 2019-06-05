@@ -41,7 +41,8 @@ public class OI {
      */
     public double getDriveSpeed() {
         // left stick, Y axis
-        return DriveHelper.handleDeadband((Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY(), Constants.kDriveControllerDeadband);
+        double raw = (Constants.LogitechController.kInvertMoveSpeed ? -1 : 1) * mDriveController.getLeftStickY();
+        return DriveHelper.handleDeadband(Math.pow(raw, 2), Constants.kDriveControllerDeadband);
     }
 
     /**
@@ -82,7 +83,7 @@ public class OI {
     }
 
     public boolean isOpenLoopArm() {
-        return SmartDashboard.getBoolean("Open Loop Arm", true);
+        return SmartDashboard.getBoolean("Open Loop Arm", false);
     }
 
     public TargetHeight getSelectedDashboardHeight() {
@@ -109,7 +110,7 @@ public class OI {
         this.mOperatorControoler.buttonStart.whileHeld(new IntakeSpin(true));
 
         createSmartDashboardBoolean("Use Stick Motion Magic", false);
-        createSmartDashboardBoolean("Open Loop Arm", true);
+        createSmartDashboardBoolean("Open Loop Arm", false);
         createSmartDashboardNumber("Desired Motion Magic Position", 0);
 
         targetHeightChooser = new SendableChooser<TargetHeight>();
