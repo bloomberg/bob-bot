@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.util.drivers.Limelight;
 import frc.robot.util.drivers.Limelight.StreamingMode;
 
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     Claw.getInstance().updateDashboard();
     Arm.getInstance().updateDashboard();
+    // Intake.getInstance().updateDashboard();
   }
 
   /**

@@ -40,9 +40,15 @@ public class Constants {
         public static final double kHatchIntakeSpeed = .4;
         public static final double kHatchExhaustSpeed = -.3;
 
-        public static final double kCargoHoldSpeed = -.15;
-        public static final double kHatchHoldSpeed = .25;
-        public static final double kHatchQuickHoldSpeed = .4;
+        public static final double kCargoHoldSpeed = -.1;
+        public static final double kHatchHoldSpeed = .1;
+        public static final double kHatchQuickHoldSpeed = .3;
+    }
+
+    public static class Intake {
+        public static final int kIntakeMotorId = 2;
+
+        public static final double kSpinSpeed = .5;
     }
 
     public static class Arm {
@@ -83,6 +89,7 @@ public class Constants {
 
     public static enum TargetHeight {
         GROUND,
+        COLLECT,
         LOW,  // Hatch load, cs hatch, r1 hatch  
         CARGO_LOAD,
         CS_CARGO_SCORE,
@@ -97,6 +104,7 @@ public class Constants {
 
     public static void initTargetHeights() {
         targetHeightMap.put(TargetHeight.GROUND, Arm.kMinPosition);
+        targetHeightMap.put(TargetHeight.COLLECT, 130);
         targetHeightMap.put(TargetHeight.LOW, 380);
         targetHeightMap.put(TargetHeight.R1_CARGO_SCORE, 618);
         targetHeightMap.put(TargetHeight.CS_CARGO_SCORE, 915);

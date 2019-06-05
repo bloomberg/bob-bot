@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.TargetHeight;
 import frc.robot.commands.IncrementArmTargetHeight;
+import frc.robot.commands.IntakeSpin;
 import frc.robot.commands.SetArmFromDashboard;
 import frc.robot.commands.SetArmTargetHeight;
 import frc.robot.commands.SetClawSpinMode;
@@ -104,6 +105,8 @@ public class OI {
         this.mOperatorControoler.dpadBottom.whenPressed(new SetArmTargetHeight(Constants.TargetHeight.GROUND));
         this.mOperatorControoler.dpadRight.whenPressed(new IncrementArmTargetHeight(true));
         this.mOperatorControoler.dpadLeft.whenPressed(new IncrementArmTargetHeight(false));
+
+        this.mOperatorControoler.buttonStart.whileHeld(new IntakeSpin(true));
 
         createSmartDashboardBoolean("Use Stick Motion Magic", false);
         createSmartDashboardBoolean("Open Loop Arm", true);

@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -83,6 +84,7 @@ public class Claw extends Subsystem {
 
     private Claw() {
         mIntakeControl = new CANSparkMax(Constants.Claw.kIntakeId, MotorType.kBrushless);
+        mIntakeControl.setIdleMode(IdleMode.kBrake);
         mSensors = new CANifier(0);
         mClawSolenoid = new Solenoid(Constants.Claw.kClawSolenoidId);
 
@@ -225,6 +227,10 @@ public class Claw extends Subsystem {
 
     public boolean isHatch() {
         return hatchLeftPresent() && hatchRightPresent();
+    }
+
+    public boolean isCargo() {
+        return cargoLeftPresent() && cargoRightPresent();
     }
 
     public boolean cargoLeftPresent() {

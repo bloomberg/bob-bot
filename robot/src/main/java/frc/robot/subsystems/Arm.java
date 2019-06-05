@@ -42,7 +42,7 @@ public class Arm extends Subsystem {
 
   // Logical values
   private double goalPosition = 0;
-  private Constants.TargetHeight goalHeight = Constants.TargetHeight.LOW;
+  private Constants.TargetHeight goalHeight = Constants.TargetHeight.COLLECT;
 
   public Arm() {
     mElevatorMaster = TalonSRXFactory.createDefaultTalonSRX(Constants.Arm.kMasterId);
@@ -111,10 +111,11 @@ public class Arm extends Subsystem {
   }
 
   public void setPresetHeight(Constants.TargetHeight preset) {
-    if (preset == Constants.TargetHeight.GROUND && Claw.getInstance().isHatch()) {
-      preset = Constants.TargetHeight.LOW;
+    if (preset == Constants.TargetHeight.GROUND && (Claw.getInstance().isHatch() || Claw.getInstance().isCargo())) {
+      goalHeight = Constants.TargetHeight.LOW;
+    } else {
+      goalHeight = preset;
     }
-    goalHeight = preset;
     setMotionMagicPosition(Constants.getPresetHeight(preset));
   }
 
